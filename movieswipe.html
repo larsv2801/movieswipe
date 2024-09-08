@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)https://lrsw.w3spaces.com/movieswipe.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>movie-swipe</title>
+    <style>
+        body{
+        background-color:#eff8e2;
+        text-align:center;
+        font-family:arial;
+        }
+        #postr{
+        width:21.3vw;
+        height:32vw;
+        }
+        h1 {
+        color:#476c9b;
+        font-family:arial;
+        }
+        h2 {
+        color:#476c9b;
+        font-family:arial;
+        }
+        button {
+        background-color:#476c9b;
+        border:none;
+        ouline:none;
+        width:5.5vw;
+        height:5.5vw;
+        align-items:center;
+        justify-content: center;
+        display:flex;
+        margin-left:auto;
+        margin-right:auto;
+        border-radius:50px;
+        }
+        #knoppen{
+        display:flex;
+        margin-left:auto;
+        margin-right:auto;
+        padding:1px;
+        width:15vw;
+        }
+        svg {
+        width:3.2vw;
+        height:3vw;
+        transition:0.2s;
+        }
+        svg:hover {
+        width:3.7vw;
+        height:3.5vw;
+        }
+    </style>
+</head>
+<body onload="film()">
+    <div id="movie-container">
+        <h1 id="titelzin"></h1>
+        <img id="postr">
+        <h2 id="strzin"></h2>
+        <div id="knoppen">
+        <button onclick="plus()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"></path></svg></button>
+        <button onclick="plus()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"></path></svg></button>
+        </div>
+    </div>
+    <script>
+        var nmr = 1;
+        var nummer = "001";
+        function plus() {
+            nmr++;
+            if (nmr < 10) {
+                nummer = nmr.toString().padStart(3, '0');
+            } else if (nmr < 100) {
+                nummer = nmr.toString().padStart(3, '0');
+            }
+            film();
+        }
+        function film(){
+      const requestOptions = {
+  method: "GET",
+  redirect: "follow"
+};
+
+fetch(`https://zenith-freckle-pulsar.glitch.me/${nummer}`, requestOptions)
+        .then((response) => response.json())  // Parse the response as JSON
+        .then((result) => {
+        document.getElementById("titelzin").innerHTML = result.titel;
+        document.getElementById("postr").src = result.poster;
+        document.getElementById("strzin").innerHTML = result.service;
+        })
+        .catch((error) => console.error(error));
+        }
+    </script>
+</body></html>
