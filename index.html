@@ -60,6 +60,8 @@
         border:solid;
         border-color:#476c9b;
         border-radius:15px;
+        width:60vw;
+        height:40vw;
         }
         #knoppen{
         display:flex;
@@ -88,6 +90,15 @@
         .knop{
         width:9vw;
         height:9vw;
+        }
+        dialog{
+        background-color:#eff8e2;
+        border:solid;
+        border-color:#476c9b;
+        border-radius:15px;
+        width:60vw;
+        height:40vw;
+        overflow:hidden;
         }
         .cofs{
         background-color:#476c9b;
@@ -273,6 +284,9 @@ vtestmatch();
 }
 console.log(matching);
 }
+var matchingnummers = "";
+var matchingtitels = "";
+
 function komaan(){
 matching = "";
 vriendzncode= document.getElementById("anderecode").value;
@@ -284,6 +298,33 @@ matching += "0" + vriendzncode[x].toString() + vriendzncode[x + 1].toString();
 }
 }
 console.log(matching);
+let fetchPromises = [];
+    for (let i = 0; i < matching.length; i += 3) {
+        let matchingnummers = matching[i] + matching[i + 1] + matching[i + 2];
+        console.log(matchingnummers);
+
+        const requestOptions = {
+            method: "GET",
+            redirect: "follow"
+        };
+
+        // Voeg elke fetch-belofte toe aan de array
+        fetchPromises.push(
+            fetch(`https://zenith-freckle-pulsar.glitch.me/${matchingnummers}`, requestOptions)
+                .then((response) => response.json())
+                .then((result) => {
+                    return result.titel; // Return de titel voor elke belofte
+                })
+                .catch((error) => console.error(error))
+        );
+    }
+
+    // Wacht tot alle fetch-belofte's zijn voltooid
+    Promise.all(fetchPromises).then((titels) => {
+        matchingtitels = titels.join(", "); // Maak een string van alle titels
+        console.log(matchingtitels);
+        document.getElementById("yourcode").innerHTML = matchingtitels; // Toon de titels in het dialoog
+    });
 }
     </script>
 </body>
